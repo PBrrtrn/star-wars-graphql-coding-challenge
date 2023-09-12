@@ -1,8 +1,10 @@
 import { Character } from "../src/model/character";
+import { Coordinates } from "../src/model/coordinates";
 import { Planet } from "../src/model/planet";
 
 describe("Character constructor", () => {
-    const tatooine = new Planet("Tatooine", 3000, "Arid", "Desert", [30.0, 30.0]);
+    const coordinates = new Coordinates(30.0, 30.0);
+    const tatooine = new Planet("Tatooine", 3000, "Arid", "Desert", coordinates);
     const hanSolo = new Character("Han Solo", "Human", 0.05, tatooine);
 
     test("Character has a name", () => {
