@@ -1,6 +1,6 @@
 import { Planet } from "../src/model/planet";
 
-describe("Planet test", () => {
+describe("Planet constructor", () => {
     const tatooine = new Planet("Tatooine", 3000, "Arid", "Desert", [30.0, 30.0]);
     
     test("Planet has a name", () => {
@@ -22,4 +22,4 @@ describe("Planet test", () => {
     test("Planet has coordinates", () => {
         expect(tatooine.coordinates).toStrictEqual([30.0, 30.0]);
     })
-})
+});
