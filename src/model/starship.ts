@@ -12,6 +12,10 @@ export class Starship {
         public currentLocation: Coordinates
     ) {}
 
+    addPassenger(character: Character): void {
+        this.passengers.push(character);
+    }
+
     getPassengers(): Character[] {
         return this.passengers;
     }
