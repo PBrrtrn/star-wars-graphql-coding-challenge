@@ -1,6 +1,6 @@
-import { Character } from "../src/model/character";
-import { Coordinates } from "../src/model/coordinates";
-import { Planet } from "../src/model/planet";
+import { Character } from "../../src/model/character";
+import { Coordinates } from "../../src/model/coordinates";
+import { Planet } from "../../src/model/planet";
 
 describe("Character", () => {
     const coordinates = new Coordinates(30.0, 30.0);

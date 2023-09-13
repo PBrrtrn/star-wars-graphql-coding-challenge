@@ -1,4 +1,4 @@
-import { Coordinates } from "../src/model/coordinates";
+import { Coordinates } from "../../src/model/coordinates";
 
 describe("Coordinates constructor", () => {
     const coordinates = new Coordinates(30.0, 15.0);

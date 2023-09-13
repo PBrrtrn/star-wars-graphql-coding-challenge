@@ -1,8 +1,8 @@
-import { Starship } from "../src/model/starship";
+import { Starship } from "../../src/model/starship";
 
-import { Character } from "../src/model/character";
-import { Planet } from "../src/model/planet";
-import { Coordinates } from "../src/model/coordinates";
+import { Character } from "../../src/model/character";
+import { Planet } from "../../src/model/planet";
+import { Coordinates } from "../../src/model/coordinates";
 
 describe("Starship", () => {
     const coordinates = new Coordinates(30.0, 30.0);

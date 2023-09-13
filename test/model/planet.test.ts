@@ -1,5 +1,5 @@
-import { Coordinates } from "../src/model/coordinates";
-import { Planet } from "../src/model/planet";
+import { Coordinates } from "../../src/model/coordinates";
+import { Planet } from "../../src/model/planet";
 
 describe("Planet constructor", () => {
     const coordinates = new Coordinates(30.0, 30.0);
