@@ -16,6 +16,15 @@ export class Starship {
         this.passengers.push(character);
     }
 
+    removePassenger(character: Character): void {
+        this.passengers.forEach((passenger, index) => {
+            if (passenger === character) {
+                this.passengers.splice(index, 1);
+                return;
+            };
+        });
+    }
+
     getPassengers(): Character[] {
         return this.passengers;
     }
