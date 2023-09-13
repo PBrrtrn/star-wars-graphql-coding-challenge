@@ -2,7 +2,6 @@ import { Coordinates } from "../src/model/coordinates";
 import { Starship } from "../src/model/starship";
 
 describe("Starship constructor", () => {
-    // TODO: Use coordinates class for currentLocation
     const coordinates = new Coordinates(30.0, 30.0);
     const millenniumFalcon = new Starship("Millennium Falcon", "YT-1300", 70, coordinates);
 

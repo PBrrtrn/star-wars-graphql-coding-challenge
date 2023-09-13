@@ -7,4 +7,8 @@ export class Character {
         public forceSensitivity: number,
         public currentLocation: Planet
     ) {}
+
+    public setCurrentLocation(planet: Planet) {
+        this.currentLocation = planet;
+    }
 }
