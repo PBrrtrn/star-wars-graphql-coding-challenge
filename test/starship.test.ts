@@ -1,7 +1,10 @@
+import { Coordinates } from "../src/model/coordinates";
 import { Starship } from "../src/model/starship";
 
 describe("Starship constructor", () => {
-    const millenniumFalcon = new Starship("Millennium Falcon", "YT-1300", 70, [30.0, 30.0]);
+    // TODO: Use coordinates class for currentLocation
+    const coordinates = new Coordinates(30.0, 30.0);
+    const millenniumFalcon = new Starship("Millennium Falcon", "YT-1300", 70, coordinates);
 
     test("Starship has a name", () => {
         expect(millenniumFalcon.name).toBe("Millennium Falcon");
@@ -16,7 +19,7 @@ describe("Starship constructor", () => {
     });
 
     test("Starship has a current location", () => {
-        expect(millenniumFalcon.currentLocation).toStrictEqual([30.0, 30.0]);
+        expect(millenniumFalcon.currentLocation).toBe(coordinates);
     });
 
     test("Starship is instantiated with empty passengers", () => {

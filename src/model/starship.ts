@@ -1,3 +1,4 @@
+import { Coordinates } from "./coordinates";
 import { Character } from "./character";
 
 export class Starship {
@@ -8,7 +9,7 @@ export class Starship {
         public name: string,
         public model: string,
         public cargoCapacity: number,
-        public currentLocation: number[]
+        public currentLocation: Coordinates
     ) {}
 
     getPassengers(): Character[] {
