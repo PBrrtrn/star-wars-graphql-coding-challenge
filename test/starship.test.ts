@@ -58,9 +58,32 @@ describe("Starship", () => {
             expect(millenniumFalcon.getPassengers()).toStrictEqual([hanSolo]);
         });
     });
+
+    describe("Travel", () => {
+        const nabooCoordinates = new Coordinates(-40.0, 210.0);
+        const naboo = new Planet("Naboo", 15000, "Temperate", "Plains", nabooCoordinates);
+
+        test("Starship can travel", () => {
+            const millenniumFalcon = createMillenniumFalcon(coordinates);
+
+            millenniumFalcon.travelTo(naboo);
+            expect(millenniumFalcon.currentLocation).toBe(nabooCoordinates);
+        });
+
+        test("Starship carries passengers to planet", () => {
+            const tatooineCoordinates = new Coordinates(30.0, 30.0);
+            const tatooine = new Planet("Tatooine", 3000, "Arid", "Desert", tatooineCoordinates);
+            const lukeSkywalker = new Character("Luke Skywalker", "Human", 0.9, tatooine);
+
+            const millenniumFalcon = createMillenniumFalcon(tatooineCoordinates);
+            millenniumFalcon.addPassenger(lukeSkywalker);
+            millenniumFalcon.travelTo(naboo);
+            expect(lukeSkywalker.currentLocation).toBe(naboo);
+        });
+    });
 });
 
-function createMillenniumFalcon(coordinates: Coordinates) {
+function createMillenniumFalcon(coordinates: Coordinates): Starship {
     return new Starship("Millennium Falcon", "YT-1300", 70, coordinates);
 }
 

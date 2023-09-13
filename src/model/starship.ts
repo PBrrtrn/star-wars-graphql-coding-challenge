@@ -1,5 +1,6 @@
 import { Coordinates } from "./coordinates";
 import { Character } from "./character";
+import { Planet } from "./planet";
 
 export class Starship {
     private passengers: Character[] = [];
@@ -11,6 +12,11 @@ export class Starship {
         public cargoCapacity: number,
         public currentLocation: Coordinates
     ) {}
+
+    travelTo(destination: Planet): void {
+        this.currentLocation = destination.coordinates;
+        this.passengers.forEach(character => { character.currentLocation = destination; });
+    }
 
     addPassenger(character: Character): void {
         this.passengers.push(character);

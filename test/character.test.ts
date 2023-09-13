@@ -26,6 +26,7 @@ describe("Character", () => {
     test("Can be relocated to a different planet", () => {
         const nabooCoordinates = new Coordinates(-40.0, 210.0);
         const naboo = new Planet("Naboo", 15000, "Temperate", "Plains", nabooCoordinates);
+
         hanSolo.setCurrentLocation(naboo);
         expect(hanSolo.currentLocation).toBe(naboo);
     });
