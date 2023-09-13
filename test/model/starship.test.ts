@@ -5,10 +5,11 @@ import { Planet } from "../../src/model/planet";
 import { Coordinates } from "../../src/model/coordinates";
 
 describe("Starship", () => {
-    const coordinates = new Coordinates(30.0, 30.0);
+    const tatooineCoordinates = new Coordinates(30.0, 30.0);
+    const tatooine = new Planet("Tatooine", 3000, "Arid", "Desert", tatooineCoordinates);
 
     describe("Instantiation", () => {
-        const millenniumFalcon = createMillenniumFalcon(coordinates);
+        const millenniumFalcon = createMillenniumFalcon(tatooineCoordinates);
 
         test("Has a name", () => {
             expect(millenniumFalcon.name).toBe("Millennium Falcon");
@@ -23,7 +24,7 @@ describe("Starship", () => {
         });
     
         test("Has a current location", () => {
-            expect(millenniumFalcon.currentLocation).toBe(coordinates);
+            expect(millenniumFalcon.currentLocation).toBe(tatooineCoordinates);
         });
     
         test("Is instantiated with empty passengers", () => {
@@ -36,12 +37,11 @@ describe("Starship", () => {
     });
 
     describe("Passengers", () => {
-        const tatooine = new Planet("Tatooine", 3000, "Arid", "Desert", coordinates);
         const lukeSkywalker = new Character("Luke Skywalker", "Human", 0.9, tatooine);
         const hanSolo = new Character("Han Solo", "Human", 0.05, tatooine);
 
         test("Can add a passenger", () => {
-            const millenniumFalcon = createMillenniumFalcon(coordinates);
+            const millenniumFalcon = createMillenniumFalcon(tatooineCoordinates);
             millenniumFalcon.addPassenger(lukeSkywalker);
             millenniumFalcon.addPassenger(hanSolo);
     
@@ -49,7 +49,7 @@ describe("Starship", () => {
         });
 
         test("Can remove a passenger", () => {
-            const millenniumFalcon = createMillenniumFalcon(coordinates);
+            const millenniumFalcon = createMillenniumFalcon(tatooineCoordinates);
             millenniumFalcon.addPassenger(lukeSkywalker);
             millenniumFalcon.addPassenger(hanSolo);
             expect(millenniumFalcon.getPassengers()).toStrictEqual([lukeSkywalker, hanSolo]);
@@ -64,15 +64,13 @@ describe("Starship", () => {
         const naboo = new Planet("Naboo", 15000, "Temperate", "Plains", nabooCoordinates);
 
         test("Starship can travel", () => {
-            const millenniumFalcon = createMillenniumFalcon(coordinates);
+            const millenniumFalcon = createMillenniumFalcon(tatooineCoordinates);
 
             millenniumFalcon.travelTo(naboo);
             expect(millenniumFalcon.currentLocation).toBe(nabooCoordinates);
         });
 
         test("Starship carries passengers to planet", () => {
-            const tatooineCoordinates = new Coordinates(30.0, 30.0);
-            const tatooine = new Planet("Tatooine", 3000, "Arid", "Desert", tatooineCoordinates);
             const lukeSkywalker = new Character("Luke Skywalker", "Human", 0.9, tatooine);
 
             const millenniumFalcon = createMillenniumFalcon(tatooineCoordinates);
