@@ -1,10 +1,9 @@
 import { Character } from "../../src/model/character";
-import { Coordinates } from "../../src/model/coordinates";
-import { Planet } from "../../src/model/planet";
+
+import { Fixtures } from "../fixtures"
 
 describe("Character", () => {
-    const coordinates = new Coordinates(30.0, 30.0);
-    const tatooine = new Planet("Tatooine", 3000, "Arid", "Desert", coordinates);
+    const tatooine = Fixtures.tatooine();
     const hanSolo = new Character("Han Solo", "Human", 0.05, tatooine);
 
     test("Has a name", () => {
@@ -24,8 +23,7 @@ describe("Character", () => {
     });
 
     test("Can be relocated to a different planet", () => {
-        const nabooCoordinates = new Coordinates(-40.0, 210.0);
-        const naboo = new Planet("Naboo", 15000, "Temperate", "Plains", nabooCoordinates);
+        const naboo = Fixtures.naboo();
 
         hanSolo.setCurrentLocation(naboo);
         expect(hanSolo.currentLocation).toBe(naboo);
