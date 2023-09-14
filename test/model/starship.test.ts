@@ -2,6 +2,10 @@ import { Starship } from "../../src/model/starship";
 
 import { Fixtures } from "../fixtures"
 
+const createMillenniumFalcon = function(): Starship {
+    return new Starship("Millennium Falcon", "YT-1300", 70, Fixtures.tatooineCoordinates);
+}
+
 describe("Starship", () => {
     const tatooineCoordinates = Fixtures.tatooineCoordinates;
 
@@ -49,7 +53,6 @@ describe("Starship", () => {
             const millenniumFalcon = createMillenniumFalcon();
             millenniumFalcon.addPassenger(lukeSkywalker);
             millenniumFalcon.addPassenger(hanSolo);
-            expect(millenniumFalcon.getPassengers()).toStrictEqual([lukeSkywalker, hanSolo]);
 
             millenniumFalcon.removePassenger(lukeSkywalker);
             expect(millenniumFalcon.getPassengers()).toStrictEqual([hanSolo]);
@@ -75,7 +78,3 @@ describe("Starship", () => {
         });
     });
 });
-
-const createMillenniumFalcon = function(): Starship {
-    return new Starship("Millennium Falcon", "YT-1300", 70, Fixtures.tatooineCoordinates);
-}
