@@ -26,4 +26,8 @@ export class Fixtures {
     static millenniumFalcon(): Starship {
         return new Starship("Millennium Falcon", "YT-1300", 70, this.tatooineCoordinates);
     }
+
+    static tieFighter(): Starship {
+        return new Starship("TIE Fighter", "Ln Starfighter", 0, this.tatooineCoordinates);
+    }
 }

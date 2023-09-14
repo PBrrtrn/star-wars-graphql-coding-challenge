@@ -93,4 +93,14 @@ describe("Starship", () => {
             expect(lukeSkywalker.currentLocation).toBe(naboo);
         });
     });
+
+    describe("Enemies", () => {
+        test("Can add an enemy", () => {
+            const millenniumFalcon = createMillenniumFalcon();
+            const tieFighter = Fixtures.tieFighter();
+
+            millenniumFalcon.addEnemy(tieFighter);
+            expect(millenniumFalcon.getEnemies()).toStrictEqual([tieFighter]);
+        });
+    })
 });

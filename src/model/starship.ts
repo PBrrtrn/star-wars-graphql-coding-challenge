@@ -43,6 +43,10 @@ export class Starship extends Location {
         return this.passengers;
     }
 
+    addEnemy(enemy: Starship): void {
+        this.enemies.push(enemy);
+    }
+
     getEnemies(): Starship[] {
         return this.enemies;
     }
