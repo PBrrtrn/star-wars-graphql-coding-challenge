@@ -1,12 +1,15 @@
+import { DistanceCalculator } from "../../src/model/distance_calculator";
 import { NearbyEnemiesDetector } from "../../src/model/nearby_enemies_detector";
 import { Fixtures } from "../fixtures";
 
 const DETECTION_RANGE = 10000;
 
 describe("Nearby enemies detector", () => {
+    const nearbyEnemiesDetector = new NearbyEnemiesDetector(new DistanceCalculator);
+
     test("Returns empty array if ship has no enemies", () => {
         const millenniumFalcon = Fixtures.millenniumFalcon();
-        const detectedEnemies = NearbyEnemiesDetector.detectEnemies(millenniumFalcon, DETECTION_RANGE);
+        const detectedEnemies = nearbyEnemiesDetector.detectEnemies(millenniumFalcon, DETECTION_RANGE);
 
         expect(detectedEnemies).toStrictEqual([]);
     });
@@ -15,7 +18,7 @@ describe("Nearby enemies detector", () => {
         const millenniumFalcon = Fixtures.millenniumFalcon();
         const tieFighter = Fixtures.tieFighter();
         millenniumFalcon.addEnemy(tieFighter);
-        const detectedEnemies = NearbyEnemiesDetector.detectEnemies(millenniumFalcon, DETECTION_RANGE);
+        const detectedEnemies = nearbyEnemiesDetector.detectEnemies(millenniumFalcon, DETECTION_RANGE);
         
         expect(detectedEnemies).toStrictEqual([tieFighter]);
     });
@@ -26,7 +29,7 @@ describe("Nearby enemies detector", () => {
         millenniumFalcon.addEnemy(tieFighter);
         tieFighter.travelTo(Fixtures.naboo());
 
-        const detectedEnemies = NearbyEnemiesDetector.detectEnemies(millenniumFalcon, DETECTION_RANGE);
+        const detectedEnemies = nearbyEnemiesDetector.detectEnemies(millenniumFalcon, DETECTION_RANGE);
         expect(detectedEnemies).toStrictEqual([]);
     })
 });
