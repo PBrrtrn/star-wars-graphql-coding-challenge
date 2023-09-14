@@ -2,30 +2,37 @@ import { Starship } from "../../src/model/starship";
 
 import { Fixtures } from "../fixtures"
 
+const MILLENNIUM_FALCON_NAME = "Millennium Falcon";
+const MILLENNIUM_FALCON_MODEL = "TY-1300";
+const MILLENNIUM_FALCON_CARGO_CAPACITY = 70;
+
 const createMillenniumFalcon = function(): Starship {
-    return new Starship("Millennium Falcon", "YT-1300", 70, Fixtures.tatooineCoordinates);
+    return new Starship(
+        MILLENNIUM_FALCON_NAME,
+        MILLENNIUM_FALCON_MODEL,
+        MILLENNIUM_FALCON_CARGO_CAPACITY,
+        Fixtures.tatooineCoordinates
+    );
 }
 
 describe("Starship", () => {
-    const tatooineCoordinates = Fixtures.tatooineCoordinates;
-
     describe("Instantiation", () => {
         const millenniumFalcon = createMillenniumFalcon();
 
         test("Has a name", () => {
-            expect(millenniumFalcon.name).toBe("Millennium Falcon");
+            expect(millenniumFalcon.name).toBe(MILLENNIUM_FALCON_NAME);
         });
     
         test("Has a model", () => {
-            expect(millenniumFalcon.model).toBe("YT-1300");
+            expect(millenniumFalcon.model).toBe(MILLENNIUM_FALCON_MODEL);
         });
     
         test("Has a cargo capacity", () => {
-            expect(millenniumFalcon.cargoCapacity).toBe(70);
+            expect(millenniumFalcon.cargoCapacity).toBe(MILLENNIUM_FALCON_CARGO_CAPACITY);
         });
     
-        test("Has a current location", () => {
-            expect(millenniumFalcon.currentLocation).toBe(tatooineCoordinates);
+        test("Has coordinates", () => {
+            expect(millenniumFalcon.getCoordinates()).toBe(Fixtures.tatooineCoordinates);
         });
     
         test("Is instantiated with empty passengers", () => {
@@ -66,7 +73,7 @@ describe("Starship", () => {
 
         test("Starship can travel", () => {
             millenniumFalcon.travelTo(naboo);
-            expect(millenniumFalcon.currentLocation).toBe(nabooCoordinates);
+            expect(millenniumFalcon.getCoordinates()).toBe(nabooCoordinates);
         });
 
         test("Starship carries passengers to planet", () => {

@@ -22,6 +22,6 @@ describe("Planet constructor", () => {
     });
 
     test("Planet has coordinates", () => {
-        expect(tatooine.coordinates).toBe(coordinates);
+        expect(tatooine.getCoordinates()).toBe(coordinates);
     })
 });

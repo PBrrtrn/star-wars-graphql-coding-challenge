@@ -2,7 +2,9 @@ import { Coordinates } from "./coordinates";
 import { Character } from "./character";
 import { Planet } from "./planet";
 
-export class Starship {
+import { Location } from "./location";
+
+export class Starship extends Location {
     private passengers: Character[] = [];
     private enemies: Starship[] = [];
 
@@ -10,11 +12,13 @@ export class Starship {
         public name: string,
         public model: string,
         public cargoCapacity: number,
-        public currentLocation: Coordinates
-    ) {}
+        coordinates: Coordinates
+    ) {
+        super(coordinates);
+    }
 
     travelTo(destination: Planet): void {
-        this.currentLocation = destination.coordinates;
+        this.setCoordinates(destination.getCoordinates());
         this.passengers.forEach(character => { character.currentLocation = destination; });
     }
 
