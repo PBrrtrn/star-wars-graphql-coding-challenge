@@ -64,19 +64,28 @@ describe("Starship", () => {
             millenniumFalcon.removePassenger(lukeSkywalker);
             expect(millenniumFalcon.getPassengers()).toStrictEqual([hanSolo]);
         });
+
+        test("Can't add a passenger that is at a different location", () => {
+            const millenniumFalcon = createMillenniumFalcon();
+            millenniumFalcon.travelTo(Fixtures.naboo());
+
+            const block = () => { millenniumFalcon.addPassenger(hanSolo) }
+            expect(block).toThrow(Error("Passenger is at different location"));
+        });
     });
 
     describe("Travel", () => {
         const nabooCoordinates = Fixtures.nabooCoordinates;
         const naboo = Fixtures.naboo();
-        const millenniumFalcon = createMillenniumFalcon();
 
         test("Starship can travel", () => {
+            const millenniumFalcon = createMillenniumFalcon();
             millenniumFalcon.travelTo(naboo);
             expect(millenniumFalcon.getCoordinates()).toBe(nabooCoordinates);
         });
 
         test("Starship carries passengers to planet", () => {
+            const millenniumFalcon = createMillenniumFalcon();
             const lukeSkywalker = Fixtures.lukeSkywalker();
 
             millenniumFalcon.addPassenger(lukeSkywalker);
