@@ -2,10 +2,9 @@
 Repository for Finalis Coding Challenge (11/9/2023)
 
 ## Working Functionalities
-- None so far
+- Model definitions
 
 ## Pending Functionalities
-- Model definitions
 - CRUD endpoints
 - Character relocation
 - Character boarding and disboarding
