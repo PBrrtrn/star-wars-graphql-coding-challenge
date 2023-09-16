@@ -1,6 +1,6 @@
 import { ApolloServer } from "@apollo/server";
 import { startStandaloneServer } from "@apollo/server/standalone";
-import { typeDefs } from "./schema";
+import { executableSchema } from "./schema";
 
 const PORT = 4567;
 
@@ -16,15 +16,8 @@ const PORT = 4567;
     - Los resolvers resuelven la lógica de negocio y devuelven el objeto modelo serializado
 */
 
-/*
-const resolvers = {
-    ...characterResolvers
-};
-*/
-
 const server = new ApolloServer({
-    typeDefs,
-    // resolvers
+    schema: executableSchema,
 });
 
 const { url } = await startStandaloneServer(server, {
