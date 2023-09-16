@@ -5,10 +5,7 @@ export class PlanetRepository {
     private static instance: PlanetRepository = this.createInstance();
 
     private static createInstance(): PlanetRepository {
-        const data = [
-            new Planet("Tatooine", 3000, "Arid", "Desert", new Coordinates(30.0, 30.0))
-        ];
-        return new PlanetRepository(data);
+        return new PlanetRepository([]);
     }
 
     private constructor(private data: Planet[]) {};
@@ -19,5 +16,14 @@ export class PlanetRepository {
 
     public getAll(): Planet[] {
         return this.data;
+    }
+
+    public insert(planet: Planet) {
+        this.data.push(planet);
+    }
+
+    public clear() {
+        // TODO: Raise exception if ENV is not test
+        this.data = [];
     }
 }
