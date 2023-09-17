@@ -1,31 +1,31 @@
 import { Coordinates } from "../../src/model/coordinates";
 import { Planet } from "../../src/model/planet";
 
-describe("Planet constructor", () => {
+describe("Planet", () => {
     const coordinates = new Coordinates(30.0, 30.0);
     const tatooine = new Planet("Tatooine", 3000, "Arid", "Desert", coordinates);
 
-    test("Planet is constructed without an ID", () => {
+    test("Is constructed without an ID", () => {
         expect(tatooine.id).toBeNull();
     });
     
-    test("Planet has a name", () => {
+    test("Has a name", () => {
         expect(tatooine.name).toBe("Tatooine");
     });
 
-    test("Planet has population", () => {
+    test("Has population", () => {
         expect(tatooine.population).toBe(3000);
     });
 
-    test("Planet has a climate", () => {
+    test("Has a climate", () => {
         expect(tatooine.climate).toBe("Arid");
     });
 
-    test("Planet has a terrain", () => {
+    test("Has a terrain", () => {
         expect(tatooine.terrain).toBe("Desert");
     });
 
-    test("Planet has coordinates", () => {
+    test("Has coordinates", () => {
         expect(tatooine.getCoordinates()).toBe(coordinates);
     })
 });

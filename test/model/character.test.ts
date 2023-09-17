@@ -6,6 +6,10 @@ describe("Character", () => {
     const tatooine = Fixtures.tatooine();
     const hanSolo = new Character("Han Solo", "Human", 0.05, tatooine);
 
+    test("Is constructed without an ID", () => {
+        expect(hanSolo.id).toBeNull();
+    });
+
     test("Has a name", () => {
         expect(hanSolo.name).toBe("Han Solo");
     });
@@ -20,12 +24,5 @@ describe("Character", () => {
 
     test("Has a current location", () => {
         expect(hanSolo.currentLocation).toBe(tatooine);
-    });
-
-    test("Can be relocated to a different planet", () => {
-        const naboo = Fixtures.naboo();
-
-        hanSolo.setCurrentLocation(naboo);
-        expect(hanSolo.currentLocation).toBe(naboo);
     });
 });

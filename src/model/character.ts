@@ -5,10 +5,7 @@ export class Character {
         public name: string,
         public species: string,
         public forceSensitivity: number,
-        public currentLocation: Planet
+        public currentLocation: Planet,
+        public id: number = null
     ) {}
-
-    public setCurrentLocation(planet: Planet) {
-        this.currentLocation = planet;
-    }
 }

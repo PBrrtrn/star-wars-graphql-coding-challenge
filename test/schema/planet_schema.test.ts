@@ -1,10 +1,11 @@
 import { planetSchema, planetResolvers } from "../../src/schema/planet_schema";
+
 import { ApolloServer, GraphQLResponse } from "@apollo/server";
 import { makeExecutableSchema } from "@graphql-tools/schema"
 import { merge } from 'lodash'
 import { gql } from "graphql-tag"
-
 import assert from "assert"
+
 import { PlanetSerializer } from "../../src/serializers/planet_serializer";
 import { Fixtures } from "../fixtures";
 import { PlanetRepository } from "../../src/repositories/planet_repository";
