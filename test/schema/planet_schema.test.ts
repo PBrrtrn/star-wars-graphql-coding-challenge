@@ -9,6 +9,8 @@ import assert from "assert"
 import { PlanetSerializer } from "../../src/serializers/planet_serializer";
 import { Fixtures } from "../fixtures";
 import { PlanetRepository } from "../../src/repositories/planet_repository";
+import { Planet } from "../../src/model/planet";
+import { Coordinates } from "../../src/model/coordinates";
 
 describe("Planet Schema", () => {
     const executableSchema = makeExecutableSchema({
@@ -26,27 +28,58 @@ describe("Planet Schema", () => {
         planetRepository.insert(Fixtures.tatooine());
     });
 
-    test("Get all planets", async () => {
-        const response = await testServer.executeOperation({
-            query: gql`query { planets { id, name, population, climate, terrain, latitude, longitude } }`
+    describe("Get", () => {
+        test("Get all planets", async () => {
+            const response = await testServer.executeOperation({
+                query: gql`query { planets { id, name, population, climate, terrain, latitude, longitude } }`
+            });
+    
+            const expectedPlanet = Fixtures.tatooine();
+            expectedPlanet.id = 0;
+            const expectedResult = {planets: [PlanetSerializer.serialize(expectedPlanet)]};
+    
+            expectSuccess(expectedResult, response);
         });
-
-        const expectedPlanet = Fixtures.tatooine();
-        expectedPlanet.id = 0;
-        const expectedResult = {planets: [PlanetSerializer.serialize(expectedPlanet)]};
-
-        expectSuccess(expectedResult, response);
+    
+        test("Get planet by ID", async () => {
+            const response = await testServer.executeOperation({
+               query: gql`query { planet(id: 0) { id, name, population, climate, terrain, latitude, longitude } }` 
+            });
+    
+            const expectedPlanet = Fixtures.tatooine();
+            expectedPlanet.id = 0;
+            const expectedResult = {planet: PlanetSerializer.serialize(expectedPlanet)};
+    
+            expectSuccess(expectedResult, response);
+        });
     });
 
-    test("Get planet by ID", async () => {
+    test("Create planet", async () => {
         const response = await testServer.executeOperation({
-           query: gql`query { planet(id: 0) { id, name, population, climate, terrain, latitude, longitude } }` 
+            query: gql`
+                mutation {
+                    createPlanet(
+                        name: "Arrakis",
+                        population: 15000000,
+                        climate: "Arid",
+                        terrain: "Desert",
+                        latitude: 90.0
+                        longitude: -45.0
+                    ) {
+                        id,
+                        name,
+                        population,
+                        climate,
+                        terrain,
+                        latitude,
+                        longitude
+                    }
+                }
+            `
         });
 
-        const expectedPlanet = Fixtures.tatooine();
-        expectedPlanet.id = 0;
-        const expectedResult = {planet: PlanetSerializer.serialize(expectedPlanet)};
-
+        const expectedPlanet = new Planet("Arrakis", 15000000, "Arid", "Desert", new Coordinates(90.0, -45.0), 1);
+        const expectedResult = { createPlanet: PlanetSerializer.serialize(expectedPlanet) };
         expectSuccess(expectedResult, response);
     });
 });

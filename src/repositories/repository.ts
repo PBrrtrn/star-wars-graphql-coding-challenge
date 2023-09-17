@@ -14,10 +14,11 @@ export abstract class Repository<T extends Identifiable> {
         return this.data[id];
     }
 
-    public insert(entity: T) {
+    public insert(entity: T): T {
         entity.id = this.currentId;
         this.data[this.currentId] = entity;
         this.currentId++;
+        return entity;
     }
 
     public clear() {
