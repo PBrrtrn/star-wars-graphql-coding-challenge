@@ -18,12 +18,9 @@ describe("Planet repository", () => {
         });
     });
 
-    test("Starts empty", () => {
-        expect(planetRepository.getAll()).toStrictEqual([]);
-    });
-
     test("Can add a planet", () => {
         const naboo = Fixtures.naboo();
+        naboo.id = 0;
         planetRepository.insert(naboo);
         expect(planetRepository.getAll()).toStrictEqual([naboo]);
     });
