@@ -11,6 +11,7 @@ import { planetSchema } from "../../src/schema/planet_schema";
 import { CharacterRepository } from "../../src/repositories/character_repository";
 import { PlanetRepository } from "../../src/repositories/planet_repository";
 import { Fixtures } from "../fixtures";
+import { StarshipRepository } from "../../src/repositories/starship_repository";
 
 describe.skip("Starship schema", () => {
     const executableSchema = makeExecutableSchema({
@@ -25,10 +26,10 @@ describe.skip("Starship schema", () => {
     beforeEach(() => {
         const characterRepository = CharacterRepository.getInstance();
         const planetRepository = PlanetRepository.getInstance();
-        // const starshipRepository = StarshipRepository.getInstance();
+        const starshipRepository = StarshipRepository.getInstance();
         characterRepository.clear();
         planetRepository.clear();
-        // starshipRepository.clear();
+        starshipRepository.clear();
 
         const tatooine = Fixtures.tatooine();
         tatooine.id = 0;
@@ -42,7 +43,7 @@ describe.skip("Starship schema", () => {
 
         const millenniumFalcon = Fixtures.millenniumFalcon();
         millenniumFalcon.addPassenger(hanSolo);
-        // starshipRepository.insert(millenniumFalcon);
+        starshipRepository.insert(millenniumFalcon);
     });
 
     describe("Get", () => {
@@ -77,6 +78,8 @@ describe.skip("Starship schema", () => {
                     }
                 }`
             });
+
+            // const expectedResult = {characters: [StarshipSerializer.serialize(expectedCharacter)]};
         });
     });
 });
