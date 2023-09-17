@@ -1,5 +1,5 @@
 import { executableSchema } from "../../src/schema";
-import { ApolloServer } from "@apollo/server";
+import { ApolloServer, GraphQLResponse } from "@apollo/server";
 import { gql } from "graphql-tag"
 
 import assert from "assert"
@@ -18,19 +18,35 @@ describe("Planet Resolver", () => {
         planetRepository.insert(Fixtures.tatooine());
     });
 
-    test("Test", async () => {
+    test("Get all planets", async () => {
         const response = await testServer.executeOperation({
             query: gql`query { planets { id, name, population, climate, terrain, latitude, longitude } }`
         });
 
-        const planet = Fixtures.tatooine();
-        planet.id = 0;
-        const expectedPlanets = {planets: [PlanetSerializer.serialize(planet)]};
+        const expectedPlanet = Fixtures.tatooine();
+        expectedPlanet.id = 0;
+        const expectedResult = {planets: [PlanetSerializer.serialize(expectedPlanet)]};
 
-        assert(response.body.kind === 'single');
-        expect(response.body.singleResult.errors).toBeUndefined();
-        expect(response.body.singleResult.data).toEqual(expectedPlanets);
-    })
+        expectSuccess(expectedResult, response);
+    });
+    /*
+    test("Get planet by ID", async () => {
+        const response = await testServer.executeOperation({
+           query: gql`query { planet(id: 0) { id, name, population, climate, terrain, latitude, longitude } }` 
+        });
 
+        const expectedPlanet = Fixtures.tatooine();
+        expectedPlanet.id = 0;
+        const expectedResult = {planet: PlanetSerializer.serialize(expectedPlanet)};
+
+        expectSuccess(expectedResult, response);
+    });
+    */
     
 });
+
+const expectSuccess = function(expectedResult: {}, response: GraphQLResponse) {
+    assert(response.body.kind === 'single');
+    expect(response.body.singleResult.errors).toBeUndefined();
+    expect(response.body.singleResult.data).toEqual(expectedResult);
+}

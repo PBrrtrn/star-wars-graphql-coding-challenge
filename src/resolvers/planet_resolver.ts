@@ -7,6 +7,11 @@ export const planetResolver = {
             return PlanetRepository.getInstance().getAll().map(planet => {
                 return PlanetSerializer.serialize(planet);
             });
+        },
+        /*
+        planet(_: any, args: any) {
+            return PlanetSerializer.serialize(PlanetRepository.getInstance().get(args.id));
         }
+        */
     }
 }

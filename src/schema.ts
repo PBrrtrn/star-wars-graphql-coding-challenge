@@ -15,6 +15,7 @@ const typeDefs = `#graphql
     }
     type Query {
         planets: [Planet!]
+        planet(id: ID!): Planet!
     }
 `
 
