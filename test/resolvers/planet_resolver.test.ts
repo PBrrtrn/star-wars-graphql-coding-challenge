@@ -29,7 +29,7 @@ describe("Planet Resolver", () => {
 
         expectSuccess(expectedResult, response);
     });
-    /*
+
     test("Get planet by ID", async () => {
         const response = await testServer.executeOperation({
            query: gql`query { planet(id: 0) { id, name, population, climate, terrain, latitude, longitude } }` 
@@ -41,8 +41,6 @@ describe("Planet Resolver", () => {
 
         expectSuccess(expectedResult, response);
     });
-    */
-    
 });
 
 const expectSuccess = function(expectedResult: {}, response: GraphQLResponse) {

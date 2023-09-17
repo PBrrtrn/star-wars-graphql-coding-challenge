@@ -8,10 +8,8 @@ export const planetResolver = {
                 return PlanetSerializer.serialize(planet);
             });
         },
-        /*
         planet(_: any, args: any) {
             return PlanetSerializer.serialize(PlanetRepository.getInstance().get(args.id));
         }
-        */
     }
 }
