@@ -1,3 +1,8 @@
+import { CharacterRepository } from "../repositories/character_repository";
+import { StarshipRepository } from "../repositories/starship_repository"
+import { CharacterSerializer } from "../serializers/character_serializer";
+import { StarshipSerializer } from "../serializers/starship_serializer";
+
 export const starshipSchema = `#graphql
     type Starship {
         id: ID!
@@ -16,50 +21,17 @@ export const starshipSchema = `#graphql
 export const starshipResolvers = {
     Query: {
         starships() {
-            return [
-                {
-                    id: "0",
-                    name: "Pepe Starship",
-                    model: "Pepe-2000",
-                    cargoCapacity: 1000.0,
-                    latitude: 0.0,
-                    longitude: 0.0,
-                    passengers: [{
-                        id: "0",
-                        name: "Pepe",
-                        species: "Pepe",
-                        forceSensitivity: 100.0,
-                        currentLocation: {
-                            id: "0",
-                            name: "Pepe Planet",
-                            population: 1,
-                            climate: "Tropical",
-                            terrain: "Beach",
-                            latitude: 0.0,
-                            longitude: 0.0
-                        }
-                    }]
-                }
-            ];
+            return StarshipRepository.getInstance().getAll().map(starship => {
+                return StarshipSerializer.serialize(starship);
+            });
         }
     },
     Starship: {
         passengers(parent: any) {
-            return [{
-                id: "0",
-                name: "Pepe",
-                species: "Pepe",
-                forceSensitivity: 100.0,
-                currentLocation: {
-                    id: "0",
-                    name: "Pepe Planet",
-                    population: 1,
-                    climate: "Tropical",
-                    terrain: "Beach",
-                    latitude: 0.0,
-                    longitude: 0.0
-                }
-            }]
+            return parent.passengers.map((passengerData: any) => {
+                const passenger = CharacterRepository.getInstance().get(passengerData.id);
+                return CharacterSerializer.serialize(passenger);
+            });
         }
     }
 }

@@ -4,7 +4,7 @@ import { CharacterSerializer } from "./character_serializer";
 export class StarshipSerializer {
     static serialize(starship: Starship) {
         return {
-            id: starship.id,
+            id: String(starship.id),
             name: starship.name,
             model: starship.model,
             cargoCapacity: starship.cargoCapacity,

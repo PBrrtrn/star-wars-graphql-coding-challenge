@@ -12,7 +12,7 @@ describe("Starship serializer", () => {
         millenniumFalcon.addPassenger(hanSolo);
 
         const expectedSerialization = {
-            id: null,
+            id: "null",
             name: "Millennium Falcon",
             model: "YT-1300",
             cargoCapacity: 70,

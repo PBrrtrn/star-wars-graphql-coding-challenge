@@ -12,8 +12,9 @@ import { CharacterRepository } from "../../src/repositories/character_repository
 import { PlanetRepository } from "../../src/repositories/planet_repository";
 import { Fixtures } from "../fixtures";
 import { StarshipRepository } from "../../src/repositories/starship_repository";
+import { StarshipSerializer } from "../../src/serializers/starship_serializer";
 
-describe.skip("Starship schema", () => {
+describe("Starship schema", () => {
     const executableSchema = makeExecutableSchema({
         typeDefs: [starshipSchema, characterSchema, planetSchema],
         resolvers: merge(starshipResolvers)
@@ -61,25 +62,41 @@ describe.skip("Starship schema", () => {
         test("Get all starships", async () => {
             const response = await testServer.executeOperation({
                 query: gql`query {
-                    characters {
+                    # Arreglas los atributos de esta query
+                    starships {
                         id,
                         name,
-                        species,
-                        forceSensitivity,
-                        currentLocation {
+                        model,
+                        cargoCapacity,
+                        latitude,
+                        longitude,
+                        passengers {
                             id,
                             name,
-                            population,
-                            climate,
-                            terrain,
-                            latitude,
-                            longitude
+                            species,
+                            forceSensitivity,
+                            currentLocation {
+                                id,
+                                name,
+                                population,
+                                climate,
+                                terrain,
+                                latitude,
+                                longitude
+                            }
                         }
                     }
                 }`
             });
 
-            // const expectedResult = {characters: [StarshipSerializer.serialize(expectedCharacter)]};
+            const expectedResult = {starships: [StarshipSerializer.serialize(expectedStarship)]};
+            expectSuccess(expectedResult, response);
         });
     });
 });
+
+const expectSuccess = function(expectedResult: {}, response: GraphQLResponse) {
+    assert(response.body.kind === 'single');
+    expect(response.body.singleResult.errors).toBeUndefined();
+    expect(response.body.singleResult.data).toEqual(expectedResult);
+}
