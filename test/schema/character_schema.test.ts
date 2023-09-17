@@ -8,8 +8,11 @@ import assert from "assert"
 
 import { Fixtures } from "../fixtures";
 import { planetSchema } from "../../src/schema/planet_schema";
+import { CharacterRepository } from "../../src/repositories/character_repository";
+import { CharacterSerializer } from "../../src/serializers/character_serializer";
+import { PlanetRepository } from "../../src/repositories/planet_repository";
 
-describe.skip("Character schema", () => {
+describe("Character schema", () => {
     const executableSchema = makeExecutableSchema({
         typeDefs: [characterSchema, planetSchema],
         resolvers: merge(characterResolvers)
@@ -20,11 +23,19 @@ describe.skip("Character schema", () => {
     });
 
     beforeEach(() => {
-        /*
         const characterRepository = CharacterRepository.getInstance();
+        const planetRepository = PlanetRepository.getInstance();
         characterRepository.clear();
-        characterRepository.insert(Fixtures.hanSolo());
-        */
+        planetRepository.clear();
+
+        const tatooine = Fixtures.tatooine();
+        tatooine.id = 0;
+
+        planetRepository.insert(tatooine);
+
+        const hanSolo = Fixtures.hanSolo();
+        hanSolo.currentLocation = tatooine;
+        characterRepository.insert(hanSolo);
     });
 
     test("Get all characters", async () => {
@@ -36,7 +47,13 @@ describe.skip("Character schema", () => {
                     species,
                     forceSensitivity,
                     currentLocation {
-                        name
+                        id,
+                        name,
+                        population,
+                        climate,
+                        terrain,
+                        latitude,
+                        longitude
                     }
                 }
             }`
@@ -46,11 +63,11 @@ describe.skip("Character schema", () => {
         expectedLocation.id = 0;
 
         const expectedCharacter = Fixtures.hanSolo();
-        // expectedCharacter.id = 1;
+        expectedCharacter.id = 0;
         expectedCharacter.currentLocation = expectedLocation;
-        // const expectedResult = {planets: [CharacterSerializer.serialize(expectedCharacter)]};
+        const expectedResult = {characters: [CharacterSerializer.serialize(expectedCharacter)]};
 
-        expectSuccess({}, response);
+        expectSuccess(expectedResult, response);
     });
 });
 

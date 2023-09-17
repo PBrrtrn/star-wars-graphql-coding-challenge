@@ -1,3 +1,8 @@
+import { CharacterRepository } from "../repositories/character_repository"
+import { PlanetRepository } from "../repositories/planet_repository";
+import { CharacterSerializer } from "../serializers/character_serializer";
+import { PlanetSerializer } from "../serializers/planet_serializer";
+
 export const characterSchema = `#graphql
     type Character {
         id: Int!
@@ -14,12 +19,14 @@ export const characterSchema = `#graphql
 export const characterResolvers = {
     Query: {
         characters() {
-            return [{id: 1, name: 'Pepe', species: 'Pepe', forceSensitivity: 100.0, currentLocationId: 0}]
+            return CharacterRepository.getInstance().getAll().map(character => {
+                return CharacterSerializer.serialize(character);
+            });
         }
     },
     Character: {
-        currentLocation(_parent: any) {
-            return {id: 0, name: 'Pepe Planet', population: 1, climate: 'Tropical', terrain: 'Beach', latitude: 0.0, longitude: 0.0}
+        currentLocation(parent: any) {
+            return PlanetSerializer.serialize(PlanetRepository.getInstance().get(parent.currentLocation.id));
         }
     }
 }
