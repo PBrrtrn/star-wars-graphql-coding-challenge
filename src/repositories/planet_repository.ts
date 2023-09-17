@@ -1,4 +1,3 @@
-import { Coordinates } from "../model/coordinates";
 import { Planet } from "../model/planet";
 
 export class PlanetRepository {
@@ -9,7 +8,6 @@ export class PlanetRepository {
     }
 
     private constructor(private data: {[key: number]: Planet}) {};
-
     private currentId: number = 0;
 
     public static getInstance(): PlanetRepository {
