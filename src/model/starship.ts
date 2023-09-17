@@ -12,7 +12,8 @@ export class Starship extends Location {
         public name: string,
         public model: string,
         public cargoCapacity: number,
-        coordinates: Coordinates
+        coordinates: Coordinates,
+        public id: number = null
     ) {
         super(coordinates);
     }

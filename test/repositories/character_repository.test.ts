@@ -23,7 +23,7 @@ describe("Character repository", () => {
         hanSolo.id = 0;
         characterRepository.insert(hanSolo);
         expect(characterRepository.getAll()).toStrictEqual([hanSolo]);
-    })
+    });
 
     test("Can get all characters", () => {
         populateRepository(characterRepository);

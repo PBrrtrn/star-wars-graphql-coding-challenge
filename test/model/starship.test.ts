@@ -19,6 +19,10 @@ describe("Starship", () => {
     describe("Instantiation", () => {
         const millenniumFalcon = createMillenniumFalcon();
 
+        test("Is constructed without an ID", () => {
+            expect(millenniumFalcon.id).toBeNull();
+        });
+
         test("Has a name", () => {
             expect(millenniumFalcon.name).toBe(MILLENNIUM_FALCON_NAME);
         });
