@@ -11,6 +11,9 @@ import { planetSchema } from "../../src/schema/planet_schema";
 import { CharacterRepository } from "../../src/repositories/character_repository";
 import { CharacterSerializer } from "../../src/serializers/character_serializer";
 import { PlanetRepository } from "../../src/repositories/planet_repository";
+import { Planet } from "../../src/model/planet";
+import { Coordinates } from "../../src/model/coordinates";
+import { Character } from "../../src/model/character";
 
 describe("Character schema", () => {
     const executableSchema = makeExecutableSchema({
@@ -95,6 +98,42 @@ describe("Character schema", () => {
             const expectedResult = {character: CharacterSerializer.serialize(expectedCharacter)};
             expectSuccess(expectedResult, response);
         });
+    });
+
+    test("Create character", async () => {
+        const arrakis = new Planet("Arrakis", 15000000, "Arid", "Desert", new Coordinates(90.0, -45.0));
+        const startingPlanet = PlanetRepository.getInstance().insert(arrakis);
+
+        const response = await testServer.executeOperation({
+            query: gql`
+                mutation {
+                    createCharacter(
+                        name: "Paul Atreides",
+                        species: "Human",
+                        forceSensitivity: 0.99,
+                        startingPlanetId: ${startingPlanet.id}
+                    ) {
+                        id,
+                        name,
+                        species,
+                        forceSensitivity,
+                        currentLocation {
+                            id,
+                            name,
+                            population,
+                            climate,
+                            terrain,
+                            latitude,
+                            longitude
+                        }
+                    }
+                }
+            `
+        });
+
+        const expectedCharacter = new Character("Paul Atreides", "Human", 0.99, startingPlanet, 1);
+        const expectedResult = {createCharacter: CharacterSerializer.serialize(expectedCharacter)};
+        expectSuccess(expectedResult, response);
     });
 });
 

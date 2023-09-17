@@ -63,7 +63,7 @@ describe("Planet Schema", () => {
                         population: 15000000,
                         climate: "Arid",
                         terrain: "Desert",
-                        latitude: 90.0
+                        latitude: 90.0,
                         longitude: -45.0
                     ) {
                         id,
