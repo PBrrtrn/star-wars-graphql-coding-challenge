@@ -21,6 +21,7 @@ export class PlanetRepository {
     }
 
     public insert(planet: Planet) {
+        planet.id = this.currentId;
         this.data[this.currentId] = planet;
         this.currentId++;
     }

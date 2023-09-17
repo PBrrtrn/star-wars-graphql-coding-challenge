@@ -20,10 +20,12 @@ describe("Planet Resolver", () => {
 
     test("Test", async () => {
         const response = await testServer.executeOperation({
-            query: gql`query { planets { name, population, climate, terrain, latitude, longitude } }`
+            query: gql`query { planets { id, name, population, climate, terrain, latitude, longitude } }`
         });
 
-        const expectedPlanets = {planets: [PlanetSerializer.serialize(Fixtures.tatooine())]};
+        const planet = Fixtures.tatooine();
+        planet.id = 0;
+        const expectedPlanets = {planets: [PlanetSerializer.serialize(planet)]};
 
         assert(response.body.kind === 'single');
         expect(response.body.singleResult.errors).toBeUndefined();

@@ -4,6 +4,10 @@ import { Planet } from "../../src/model/planet";
 describe("Planet constructor", () => {
     const coordinates = new Coordinates(30.0, 30.0);
     const tatooine = new Planet("Tatooine", 3000, "Arid", "Desert", coordinates);
+
+    test("Planet is constructed without an ID", () => {
+        expect(tatooine.id).toBeNull();
+    });
     
     test("Planet has a name", () => {
         expect(tatooine.name).toBe("Tatooine");

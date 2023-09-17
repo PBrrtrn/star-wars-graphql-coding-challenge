@@ -7,7 +7,8 @@ export class Planet extends Location {
         public population: number,
         public climate: string,
         public terrain: string,
-        coordinates: Coordinates
+        coordinates: Coordinates,
+        public id: number = null
     ) {
         super(coordinates);
     }

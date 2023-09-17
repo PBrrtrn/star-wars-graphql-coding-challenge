@@ -5,6 +5,7 @@ import { planetResolver } from "./resolvers/planet_resolver";
 
 const typeDefs = `#graphql
     type Planet {
+        id: Int!
         name: String!
         population: Int!
         climate: String!

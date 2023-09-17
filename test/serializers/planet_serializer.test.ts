@@ -4,6 +4,7 @@ import { Fixtures } from "../fixtures";
 describe("Planet serializer", () => {
     test("Can serialize a planet", () => {
         const expectedSerialization = {
+            id: null,
             name: "Tatooine",
             population: 3000,
             climate: "Arid",
