@@ -37,37 +37,64 @@ describe("Character schema", () => {
         hanSolo.currentLocation = tatooine;
         characterRepository.insert(hanSolo);
     });
-
-    test("Get all characters", async () => {
-        const response = await testServer.executeOperation({
-            query: gql`query {
-                characters {
-                    id,
-                    name,
-                    species,
-                    forceSensitivity,
-                    currentLocation {
-                        id,
-                        name,
-                        population,
-                        climate,
-                        terrain,
-                        latitude,
-                        longitude
-                    }
-                }
-            }`
-        });
-
+    
+    describe("Get", () => {
         const expectedLocation = Fixtures.tatooine();
         expectedLocation.id = 0;
 
         const expectedCharacter = Fixtures.hanSolo();
         expectedCharacter.id = 0;
         expectedCharacter.currentLocation = expectedLocation;
-        const expectedResult = {characters: [CharacterSerializer.serialize(expectedCharacter)]};
 
-        expectSuccess(expectedResult, response);
+        test("Get all characters", async () => {
+            const response = await testServer.executeOperation({
+                query: gql`query {
+                    characters {
+                        id,
+                        name,
+                        species,
+                        forceSensitivity,
+                        currentLocation {
+                            id,
+                            name,
+                            population,
+                            climate,
+                            terrain,
+                            latitude,
+                            longitude
+                        }
+                    }
+                }`
+            });
+    
+            const expectedResult = {characters: [CharacterSerializer.serialize(expectedCharacter)]};
+            expectSuccess(expectedResult, response);
+        });
+
+        test("Get character by ID", async () => {
+            const response = await testServer.executeOperation({
+                query: gql`query {
+                    character(id: 0) {
+                        id,
+                        name,
+                        species,
+                        forceSensitivity,
+                        currentLocation {
+                            id,
+                            name,
+                            population,
+                            climate,
+                            terrain,
+                            latitude,
+                            longitude
+                        }
+                    }
+                }`
+            });
+    
+            const expectedResult = {character: CharacterSerializer.serialize(expectedCharacter)};
+            expectSuccess(expectedResult, response);
+        });
     });
 });
 

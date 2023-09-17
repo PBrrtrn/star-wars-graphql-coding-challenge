@@ -4,7 +4,7 @@ import { PlanetSerializer } from "./planet_serializer";
 export class CharacterSerializer {
     public static serialize(character: Character) {
         return {
-            id: character.id,
+            id: String(character.id),
             name: character.name,
             species: character.species,
             forceSensitivity: character.forceSensitivity,

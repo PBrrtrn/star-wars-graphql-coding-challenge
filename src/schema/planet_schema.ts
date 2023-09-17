@@ -3,7 +3,7 @@ import { PlanetSerializer } from "../serializers/planet_serializer";
 
 export const planetSchema = `#graphql
     type Planet {
-        id: Int!
+        id: ID!
         name: String!
         population: Int!
         climate: String!

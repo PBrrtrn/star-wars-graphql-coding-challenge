@@ -5,7 +5,7 @@ import { PlanetSerializer } from "../serializers/planet_serializer";
 
 export const characterSchema = `#graphql
     type Character {
-        id: Int!
+        id: ID!
         name: String!
         species: String!
         forceSensitivity: Float!
@@ -13,6 +13,7 @@ export const characterSchema = `#graphql
     },
     type Query {
         characters: [Character!]
+        character(id: ID!): Character!
     }
 `
 
@@ -22,6 +23,9 @@ export const characterResolvers = {
             return CharacterRepository.getInstance().getAll().map(character => {
                 return CharacterSerializer.serialize(character);
             });
+        },
+        character(_: any, args: any) {
+            return CharacterSerializer.serialize(CharacterRepository.getInstance().get(0));
         }
     },
     Character: {

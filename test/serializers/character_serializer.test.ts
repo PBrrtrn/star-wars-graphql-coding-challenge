@@ -5,7 +5,7 @@ import { Fixtures } from "../fixtures";
 describe("Character serializer", () => {
     test("Can serialize a character", () => {
         const expectedSerialization = {
-            id: null,
+            id: "null",
             name: "Han Solo",
             species: "Human",
             forceSensitivity: 0.05,
