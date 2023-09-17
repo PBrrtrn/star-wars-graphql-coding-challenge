@@ -13,6 +13,8 @@ import { PlanetRepository } from "../../src/repositories/planet_repository";
 import { Fixtures } from "../fixtures";
 import { StarshipRepository } from "../../src/repositories/starship_repository";
 import { StarshipSerializer } from "../../src/serializers/starship_serializer";
+import { Starship } from "../../src/model/starship";
+import { Coordinates } from "../../src/model/coordinates";
 
 describe("Starship schema", () => {
     const executableSchema = makeExecutableSchema({
@@ -61,9 +63,51 @@ describe("Starship schema", () => {
 
         test("Get all starships", async () => {
             const response = await testServer.executeOperation({
-                query: gql`query {
-                    # Arreglas los atributos de esta query
-                    starships {
+                query: gql`
+                    query {
+                        starships {
+                            id,
+                            name,
+                            model,
+                            cargoCapacity,
+                            latitude,
+                            longitude,
+                            passengers {
+                                id,
+                                name,
+                                species,
+                                forceSensitivity,
+                                currentLocation {
+                                    id,
+                                    name,
+                                    population,
+                                    climate,
+                                    terrain,
+                                    latitude,
+                                    longitude
+                                }
+                            }
+                        }
+                    }
+                `
+            });
+
+            const expectedResult = {starships: [StarshipSerializer.serialize(expectedStarship)]};
+            expectSuccess(expectedResult, response);
+        });
+    });
+
+    test("Create starship", async () => {
+        const response = await testServer.executeOperation({
+            query: gql`
+                mutation {
+                    createStarship(
+                        name: "Dream Voyager",
+                        model: "Update Ship",
+                        cargoCapacity: 10.0,
+                        latitude: -40.0,
+                        longitude: -40.0
+                    ) {
                         id,
                         name,
                         model,
@@ -71,27 +115,22 @@ describe("Starship schema", () => {
                         latitude,
                         longitude,
                         passengers {
-                            id,
-                            name,
-                            species,
-                            forceSensitivity,
-                            currentLocation {
-                                id,
-                                name,
-                                population,
-                                climate,
-                                terrain,
-                                latitude,
-                                longitude
-                            }
+                            id
                         }
                     }
-                }`
-            });
-
-            const expectedResult = {starships: [StarshipSerializer.serialize(expectedStarship)]};
-            expectSuccess(expectedResult, response);
+                }
+            `
         });
+
+        const expectedStarship = new Starship(
+            "Dream Voyager",
+            "Update Ship",
+            10.0,
+            new Coordinates(-40.0, -40.0),
+            1
+        );
+        const expectedResult = {createStarship: StarshipSerializer.serialize(expectedStarship)};
+        expectSuccess(expectedResult, response);
     });
 });
 

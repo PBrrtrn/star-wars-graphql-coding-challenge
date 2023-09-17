@@ -1,3 +1,5 @@
+import { Coordinates } from "../model/coordinates";
+import { Starship } from "../model/starship";
 import { CharacterRepository } from "../repositories/character_repository";
 import { StarshipRepository } from "../repositories/starship_repository"
 import { CharacterSerializer } from "../serializers/character_serializer";
@@ -15,6 +17,15 @@ export const starshipSchema = `#graphql
     },
     type Query {
         starships: [Starship!]
+    },
+    type Mutation {
+        createStarship(
+            name: String!
+            model: String!
+            cargoCapacity: Float!
+            latitude: Float!
+            longitude: Float!
+        ): Starship!
     }
 `
 
@@ -32,6 +43,19 @@ export const starshipResolvers = {
                 const passenger = CharacterRepository.getInstance().get(passengerData.id);
                 return CharacterSerializer.serialize(passenger);
             });
+        }
+    },
+    Mutation: {
+        createStarship(_: any, args: any) {
+            const starship = new Starship(
+                args.name,
+                args.model,
+                args.cargoCapacity,
+                new Coordinates(args.latitude, args.longitude)
+            );
+
+            const insertedStarship = StarshipRepository.getInstance().insert(starship);
+            return StarshipSerializer.serialize(insertedStarship);
         }
     }
 }
