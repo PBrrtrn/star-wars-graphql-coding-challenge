@@ -1,11 +1,11 @@
 import { ApolloServer } from "@apollo/server";
 import { startStandaloneServer } from "@apollo/server/standalone";
-import { executableSchema } from "./schema";
+import { applicationSchema } from "./schema/schema";
 
 const PORT = 4567;
 
 const server = new ApolloServer({
-    schema: executableSchema,
+    schema: applicationSchema,
 });
 
 const { url } = await startStandaloneServer(server, {
