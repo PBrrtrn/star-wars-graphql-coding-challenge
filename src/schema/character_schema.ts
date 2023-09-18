@@ -40,15 +40,17 @@ export const characterSchema = `#graphql
     }
 `
 
+const characterRepository = CharacterRepository.getInstance();
+
 export const characterResolvers = {
     Query: {
         characters() {
-            return CharacterRepository.getInstance().getAll().map(character => {
-                return CharacterSerializer.serialize(character);
+            return characterRepository.getAll().map(character => {
+                return serializeCharacter(character);
             });
         },
         character(_: any, args: any) {
-            return CharacterSerializer.serialize(CharacterRepository.getInstance().get(args.id));
+            return serializeCharacter(characterRepository.get(args.id));
         }
     },
     Character: {
@@ -65,11 +67,11 @@ export const characterResolvers = {
                 args.forceSensitivity,
                 startingPlanet
             );
-            const insertedCharacter = CharacterRepository.getInstance().insert(character);
-            return CharacterSerializer.serialize(insertedCharacter);
+            const insertedCharacter = characterRepository.insert(character);
+            return serializeCharacter(insertedCharacter);
         },
         updateCharacter(_: any, args: any) {
-            const character = CharacterRepository.getInstance().get(args.id);
+            const character = characterRepository.get(args.id);
             const updatedCharacter = new Character(
                 args.name || character.name,
                 args.species || character.species,
@@ -78,22 +80,26 @@ export const characterResolvers = {
                 args.id
             );
 
-            CharacterRepository.getInstance().update(args.id, updatedCharacter);
-            return CharacterSerializer.serialize(updatedCharacter);
+            characterRepository.update(args.id, updatedCharacter);
+            return serializeCharacter(updatedCharacter);
         },
         deleteCharacter(_: any, args: any) {
-            const deletedCharacter = CharacterRepository.getInstance().delete(args.id);
-            return CharacterSerializer.serialize(deletedCharacter);
+            const deletedCharacter = characterRepository.delete(args.id);
+            return serializeCharacter(deletedCharacter);
         },
         boardStarship(_: any, args: any) {
             const starshipRepository = StarshipRepository.getInstance();
             const starship = starshipRepository.get(args.starshipId);
-            const character = CharacterRepository.getInstance().get(args.characterId);
+            const character = characterRepository.get(args.characterId);
             starship.addPassenger(character);
             
             starshipRepository.update(args.starshipId, starship);
 
-            return CharacterSerializer.serialize(character);
+            return serializeCharacter(character);
         }
     }
 }
+function serializeCharacter(character: Character): { id: string; name: string; species: string; forceSensitivity: number; currentLocation: { id: string; name: string; population: number; climate: string; terrain: string; latitude: number; longitude: number; }; } {
+    return CharacterSerializer.serialize(character);
+}
+
