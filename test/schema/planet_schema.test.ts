@@ -82,6 +82,42 @@ describe("Planet Schema", () => {
         const expectedResult = { createPlanet: PlanetSerializer.serialize(expectedPlanet) };
         expectSuccess(expectedResult, response);
     });
+
+    test("Update planet", async() => {
+        const response = await testServer.executeOperation({
+            query: gql`
+                mutation {
+                    updatePlanet(
+                        id: 0,
+                        population: 4000,
+                        terrain: "Rocky"
+                    ) {
+                        id,
+                        name,
+                        population,
+                        climate,
+                        terrain,
+                        latitude,
+                        longitude
+                    }
+                }
+            `
+        });
+
+        const expectedResult = {
+            updatePlanet: {
+                id: "0",
+                name: "Tatooine",
+                population: 4000,
+                climate: "Arid",
+                terrain: "Rocky",
+                latitude: 30.0,
+                longitude: 30.0
+            }
+        };
+
+        expectSuccess(expectedResult, response);
+    });
 });
 
 const expectSuccess = function(expectedResult: {}, response: GraphQLResponse) {

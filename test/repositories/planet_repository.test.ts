@@ -1,3 +1,5 @@
+import { Coordinates } from "../../src/model/coordinates";
+import { Planet } from "../../src/model/planet";
 import { PlanetRepository } from "../../src/repositories/planet_repository";
 import { Fixtures } from "../fixtures";
 
@@ -43,6 +45,13 @@ describe("Planet repository", () => {
         tatooine.id = 1;
 
         expect(planetRepository.get(1)).toStrictEqual(tatooine);
+    });
+
+    test("Can update a planet by ID", () => {
+        populateRepository(planetRepository);
+        const updatedPlanet = new Planet("Tatooine", 4000, "Arid", "Rocky", new Coordinates(30.0, 30.0), 0);
+        planetRepository.update(0, updatedPlanet);
+        expect(planetRepository.get(0)).toStrictEqual(updatedPlanet);
     });
 });
 

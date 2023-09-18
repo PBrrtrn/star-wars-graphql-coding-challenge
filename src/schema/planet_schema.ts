@@ -26,6 +26,15 @@ export const planetSchema = `#graphql
             latitude: Float!
             longitude: Float!
         ): Planet!
+        updatePlanet(
+            id: ID!
+            name: String
+            population: Int
+            climate: String
+            terrain: String
+            latitude: Float
+            longitude: Float
+        ): Planet!
     }
 `
 
@@ -52,6 +61,23 @@ export const planetResolvers = {
 
             const insertedPlanet = PlanetRepository.getInstance().insert(planet);
             return PlanetSerializer.serialize(insertedPlanet);
+        },
+        updatePlanet(_: any, args: any) {
+            const planet = PlanetRepository.getInstance().get(args.id);
+            const planetCoordinates = planet.getCoordinates();
+            const updatedPlanet = new Planet(
+                args.name || planet.name,
+                args.population || planet.population,
+                args.climate || planet.climate,
+                args.terrain || planet.terrain,
+                new Coordinates(
+                    args.latitude || planetCoordinates.latitude,
+                    args.longitude || planetCoordinates.longitude
+                )
+            );
+
+            PlanetRepository.getInstance().update(args.id, updatedPlanet);
+            return PlanetSerializer.serialize(updatedPlanet);
         }
     }
 }
