@@ -40,7 +40,7 @@ export const characterResolvers = {
             });
         },
         character(_: any, args: any) {
-            return CharacterSerializer.serialize(CharacterRepository.getInstance().get(0));
+            return CharacterSerializer.serialize(CharacterRepository.getInstance().get(args.id));
         }
     },
     Character: {

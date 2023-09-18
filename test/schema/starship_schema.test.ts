@@ -95,6 +95,41 @@ describe("Starship schema", () => {
             const expectedResult = {starships: [StarshipSerializer.serialize(expectedStarship)]};
             expectSuccess(expectedResult, response);
         });
+
+        test("Get starship by ID", async () => {
+            const response = await testServer.executeOperation({
+                query: gql`
+                    query {
+                        starship(id: 0) {
+                            id,
+                            name,
+                            model,
+                            cargoCapacity,
+                            latitude,
+                            longitude,
+                            passengers {
+                                id,
+                                name,
+                                species,
+                                forceSensitivity,
+                                currentLocation {
+                                    id,
+                                    name,
+                                    population,
+                                    climate,
+                                    terrain,
+                                    latitude,
+                                    longitude
+                                }
+                            }
+                        }
+                    }
+                `
+            });
+
+            const expectedResult = {starship: StarshipSerializer.serialize(expectedStarship)};
+            expectSuccess(expectedResult, response);
+        });
     });
 
     test("Create starship", async () => {

@@ -17,6 +17,7 @@ export const starshipSchema = `#graphql
     },
     type Query {
         starships: [Starship!]
+        starship(id: ID!): Starship!
     },
     type Mutation {
         createStarship(
@@ -43,6 +44,9 @@ export const starshipResolvers = {
             return StarshipRepository.getInstance().getAll().map(starship => {
                 return StarshipSerializer.serialize(starship);
             });
+        },
+        starship(_: any, args: any) {
+            return StarshipSerializer.serialize(StarshipRepository.getInstance().get(args.id));
         }
     },
     Starship: {
