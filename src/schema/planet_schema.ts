@@ -35,6 +35,9 @@ export const planetSchema = `#graphql
             latitude: Float
             longitude: Float
         ): Planet!
+        deletePlanet(
+            id: ID!
+        ): Planet!
     }
 `
 
@@ -78,6 +81,11 @@ export const planetResolvers = {
 
             PlanetRepository.getInstance().update(args.id, updatedPlanet);
             return PlanetSerializer.serialize(updatedPlanet);
+        },
+        deletePlanet(_: any, args: any) {
+            // TODO: Validate no characters are in planet
+            const deletedPlanet = PlanetRepository.getInstance().delete(args.id);
+            return PlanetSerializer.serialize(deletedPlanet);
         }
     }
 }

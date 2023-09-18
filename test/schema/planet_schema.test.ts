@@ -118,6 +118,16 @@ describe("Planet Schema", () => {
 
         expectSuccess(expectedResult, response);
     });
+
+    test("Delete planet", async () => {
+        const response = await testServer.executeOperation({
+            query: gql`mutation { deletePlanet(id: 0) { id, name } }`
+        });
+
+        const expectedResult = { deletePlanet: {id: "0", name: "Tatooine"} };
+        expectSuccess(expectedResult, response);
+        expect(PlanetRepository.getInstance().get(0)).toBeUndefined();
+    });
 });
 
 const expectSuccess = function(expectedResult: {}, response: GraphQLResponse) {
