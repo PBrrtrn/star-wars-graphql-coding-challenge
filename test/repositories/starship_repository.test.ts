@@ -1,3 +1,4 @@
+import { Starship } from "../../src/model/starship";
 import { StarshipRepository } from "../../src/repositories/starship_repository";
 import { Fixtures } from "../fixtures";
 
@@ -16,33 +17,40 @@ describe("Starship repository", () => {
             const secondRepository = StarshipRepository.getInstance();
             expect(secondRepository.getAll()).toStrictEqual([millenniumFalcon]);
         });
+    });
 
-        test("Can add a starship", () => {
-            const millenniumFalcon = Fixtures.millenniumFalcon();
-            millenniumFalcon.id = 0;
-            starshipRepository.insert(millenniumFalcon);
-            expect(starshipRepository.getAll()).toStrictEqual([millenniumFalcon]);
-        });
+    test("Can add a starship", () => {
+        const millenniumFalcon = Fixtures.millenniumFalcon();
+        millenniumFalcon.id = 0;
+        starshipRepository.insert(millenniumFalcon);
+        expect(starshipRepository.getAll()).toStrictEqual([millenniumFalcon]);
+    });
 
-        test("Can get all starships", () => {
-            populateRepository(starshipRepository);
-    
-            const millenniumFalcon = Fixtures.millenniumFalcon();
-            millenniumFalcon.id = 0;
-            const tieFighter = Fixtures.tieFighter();
-            tieFighter.id = 1;
-    
-            expect(starshipRepository.getAll()).toStrictEqual([millenniumFalcon, tieFighter]);
-        });
+    test("Can get all starships", () => {
+        populateRepository(starshipRepository);
 
-        test("Can get a starship by ID", () => {
-            populateRepository(starshipRepository);
+        const millenniumFalcon = Fixtures.millenniumFalcon();
+        millenniumFalcon.id = 0;
+        const tieFighter = Fixtures.tieFighter();
+        tieFighter.id = 1;
 
-            const tieFighter = Fixtures.tieFighter();
-            tieFighter.id = 1;
+        expect(starshipRepository.getAll()).toStrictEqual([millenniumFalcon, tieFighter]);
+    });
 
-            expect(starshipRepository.get(1)).toStrictEqual(tieFighter);
-        })
+    test("Can get a starship by ID", () => {
+        populateRepository(starshipRepository);
+
+        const tieFighter = Fixtures.tieFighter();
+        tieFighter.id = 1;
+
+        expect(starshipRepository.get(1)).toStrictEqual(tieFighter);
+    });
+
+    test("Can update a starship by ID", () => {
+        populateRepository(starshipRepository);
+        const updatedStarship = new Starship("TIE Fighter", "Ln-Starfighter", 5, Fixtures.tatooineCoordinates, 1);
+        starshipRepository.update(1, updatedStarship);
+        expect(starshipRepository.get(1)).toStrictEqual(updatedStarship);
     });
 });
 
