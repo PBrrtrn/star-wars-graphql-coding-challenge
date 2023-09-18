@@ -29,6 +29,9 @@ export const characterSchema = `#graphql
             species: String
             forceSensitivity: Float
         ): Character!
+        deleteCharacter(
+            id: ID!
+        ): Character!
     }
 `
 
@@ -72,6 +75,10 @@ export const characterResolvers = {
 
             CharacterRepository.getInstance().update(args.id, updatedCharacter);
             return CharacterSerializer.serialize(updatedCharacter);
+        },
+        deleteCharacter(_: any, args: any) {
+            const deletedCharacter = CharacterRepository.getInstance().delete(args.id);
+            return CharacterSerializer.serialize(deletedCharacter);
         }
     }
 }

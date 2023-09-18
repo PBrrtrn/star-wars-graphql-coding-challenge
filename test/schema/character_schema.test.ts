@@ -160,4 +160,14 @@ describe("Character schema", () => {
 
         expectSuccess(expectedResult, response);
     });
+
+    test("Delete character", async () => {
+        const response = await testServer.executeOperation({
+            query: gql`mutation { deleteCharacter(id: 0) { id, name } }`
+        });
+
+        const expectedResult = { deleteCharacter: {id: "0", name: "Han Solo"} };
+        expectSuccess(expectedResult, response);
+        expect(CharacterRepository.getInstance().get(0)).toBeUndefined();
+    });
 });
