@@ -27,6 +27,12 @@ export abstract class Repository<T extends Identifiable> {
         return updatedEntity;
     }
 
+    public delete(id: number): T {
+        const entity = this.data[id];
+        delete this.data[id];
+        return entity;
+    }
+
     public clear() {
         // TODO: Raise exception if ENV is not test
         this.data = {};

@@ -53,6 +53,15 @@ describe("Planet repository", () => {
         planetRepository.update(0, updatedPlanet);
         expect(planetRepository.get(0)).toStrictEqual(updatedPlanet);
     });
+
+    test("Can delete a planet by ID", () => {
+        populateRepository(planetRepository);
+        planetRepository.delete(1);
+
+        const naboo = Fixtures.naboo();
+        naboo.id = 0;
+        expect(planetRepository.getAll()).toStrictEqual([naboo]);
+    });
 });
 
 const populateRepository = function(planetRepository: PlanetRepository) {

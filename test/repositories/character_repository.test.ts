@@ -54,6 +54,16 @@ describe("Character repository", () => {
         const fetchedCharacter = characterRepository.get(0);
         expect(fetchedCharacter).toStrictEqual(updatedCharacter);
     });
+
+    test("Can delete a character by ID", () => {
+        populateRepository(characterRepository);
+        characterRepository.delete(1);
+
+        const hanSolo = Fixtures.hanSolo();
+        hanSolo.id = 0;
+
+        expect(characterRepository.getAll()).toStrictEqual([hanSolo]);
+    });
 });
 
 const populateRepository = function(characterRepository: CharacterRepository) {

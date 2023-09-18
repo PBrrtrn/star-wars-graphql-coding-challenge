@@ -52,6 +52,15 @@ describe("Starship repository", () => {
         starshipRepository.update(1, updatedStarship);
         expect(starshipRepository.get(1)).toStrictEqual(updatedStarship);
     });
+
+    test("Can delete a starship by ID", () => {
+        populateRepository(starshipRepository);
+        starshipRepository.delete(1);
+
+        const millenniumFalcon = Fixtures.millenniumFalcon();
+        millenniumFalcon.id = 0;
+        expect(starshipRepository.getAll()).toStrictEqual([millenniumFalcon]);
+    });
 });
 
 const populateRepository = function(starshipRepository: StarshipRepository) {
