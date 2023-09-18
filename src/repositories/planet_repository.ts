@@ -1,5 +1,5 @@
-import { Planet } from "../model/planet";
-import { Repository } from "./repository";
+import { Planet } from "../model/planet.js";
+import { Repository } from "./repository.js";
 
 export class PlanetRepository extends Repository<Planet> {
     private static instance: PlanetRepository = this.createInstance();

@@ -1,5 +1,5 @@
-import { Starship } from "../model/starship";
-import { Repository } from "./repository";
+import { Starship } from "../model/starship.js";
+import { Repository } from "./repository.js";
 
 export class StarshipRepository extends Repository<Starship> {
     private static instance: StarshipRepository = this.createInstance();

@@ -1,4 +1,4 @@
-import { Planet } from "./planet"
+import { Planet } from "./planet.js"
 
 export class Character {
     constructor(

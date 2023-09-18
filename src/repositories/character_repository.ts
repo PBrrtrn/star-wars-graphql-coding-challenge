@@ -1,5 +1,5 @@
-import { Character } from "../model/character";
-import { Repository } from "./repository";
+import { Character } from "../model/character.js";
+import { Repository } from "./repository.js";
 
 export class CharacterRepository extends Repository<Character> {
     private static instance: CharacterRepository = this.createInstance();

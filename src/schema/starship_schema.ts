@@ -1,9 +1,9 @@
-import { Coordinates } from "../model/coordinates";
-import { Starship } from "../model/starship";
-import { CharacterRepository } from "../repositories/character_repository";
-import { StarshipRepository } from "../repositories/starship_repository"
-import { CharacterSerializer } from "../serializers/character_serializer";
-import { StarshipSerializer } from "../serializers/starship_serializer";
+import { Coordinates } from "../model/coordinates.js";
+import { Starship } from "../model/starship.js";
+import { CharacterRepository } from "../repositories/character_repository.js";
+import { StarshipRepository } from "../repositories/starship_repository.js";
+import { CharacterSerializer } from "../serializers/character_serializer.js";
+import { StarshipSerializer } from "../serializers/starship_serializer.js";
 
 export const starshipSchema = `#graphql
     type Starship {

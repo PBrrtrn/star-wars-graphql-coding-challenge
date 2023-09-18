@@ -1,5 +1,5 @@
-import { Coordinates } from "./coordinates";
-import { Location } from "./location";
+import { Coordinates } from "./coordinates.js";
+import { Location } from "./location.js";
 
 export class Planet extends Location {
     constructor(

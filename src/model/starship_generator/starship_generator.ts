@@ -1,6 +1,6 @@
-import { Starship } from "../starship";
-import { GenerationCriteria } from "./attributes_generation_criteria/generation_criteria";
-import { Coordinates } from "../coordinates";
+import { Starship } from "../starship.js";
+import { GenerationCriteria } from "./attributes_generation_criteria/generation_criteria.js";
+import { Coordinates } from "../coordinates.js";
 
 export class StarshipGenerator {
     readonly MIN_CARGO_CAPACITY = 0.0;

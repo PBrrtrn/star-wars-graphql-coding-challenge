@@ -1,7 +1,7 @@
-import { Coordinates } from "../model/coordinates";
-import { Planet } from "../model/planet";
-import { PlanetRepository } from "../repositories/planet_repository";
-import { PlanetSerializer } from "../serializers/planet_serializer";
+import { Coordinates } from "../model/coordinates.js";
+import { Planet } from "../model/planet.js";
+import { PlanetRepository } from "../repositories/planet_repository.js";
+import { PlanetSerializer } from "../serializers/planet_serializer.js";
 
 export const planetSchema = `#graphql
     type Planet {

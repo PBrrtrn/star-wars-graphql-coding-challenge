@@ -1,5 +1,5 @@
-import { Starship } from "../model/starship";
-import { CharacterSerializer } from "./character_serializer";
+import { Starship } from "../model/starship.js";
+import { CharacterSerializer } from "./character_serializer.js";
 
 export class StarshipSerializer {
     static serialize(starship: Starship) {

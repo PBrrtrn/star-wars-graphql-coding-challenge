@@ -1,8 +1,8 @@
-import { Coordinates } from "./coordinates";
-import { Character } from "./character";
-import { Planet } from "./planet";
+import { Coordinates } from "./coordinates.js";
+import { Character } from "./character.js";
+import { Planet } from "./planet.js";
 
-import { Location } from "./location";
+import { Location } from "./location.js";
 
 export class Starship extends Location {
     private passengers: Character[] = [];

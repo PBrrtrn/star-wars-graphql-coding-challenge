@@ -1,4 +1,4 @@
-import { convertToRange } from "../../../utils/convert_to_range";
+import { convertToRange } from "../../../utils/convert_to_range.js";
 
 export interface GenerationCriteria {
     generateNumber(lowerBound: number, upperBound: number): number;

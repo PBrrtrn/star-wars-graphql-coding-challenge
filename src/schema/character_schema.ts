@@ -1,8 +1,8 @@
-import { Character } from "../model/character";
-import { CharacterRepository } from "../repositories/character_repository"
-import { PlanetRepository } from "../repositories/planet_repository";
-import { CharacterSerializer } from "../serializers/character_serializer";
-import { PlanetSerializer } from "../serializers/planet_serializer";
+import { Character } from "../model/character.js";
+import { CharacterRepository } from "../repositories/character_repository.js";
+import { PlanetRepository } from "../repositories/planet_repository.js";
+import { CharacterSerializer } from "../serializers/character_serializer.js";
+import { PlanetSerializer } from "../serializers/planet_serializer.js";
 
 export const characterSchema = `#graphql
     type Character {

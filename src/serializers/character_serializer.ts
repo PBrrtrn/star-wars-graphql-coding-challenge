@@ -1,5 +1,5 @@
-import { Character } from "../model/character";
-import { PlanetSerializer } from "./planet_serializer";
+import { Character } from "../model/character.js";
+import { PlanetSerializer } from "./planet_serializer.js";
 
 export class CharacterSerializer {
     public static serialize(character: Character) {

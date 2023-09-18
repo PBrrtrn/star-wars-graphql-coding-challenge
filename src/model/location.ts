@@ -1,4 +1,4 @@
-import { Coordinates } from "./coordinates";
+import { Coordinates } from "./coordinates.js";
 
 export abstract class Location {
     constructor(

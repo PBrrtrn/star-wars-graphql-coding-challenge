@@ -1,4 +1,4 @@
-import { Planet } from "../model/planet";
+import { Planet } from "../model/planet.js";
 
 export class PlanetSerializer {
     public static serialize(planet: Planet) {

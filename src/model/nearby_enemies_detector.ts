@@ -1,5 +1,5 @@
-import { DistanceCalculator } from "./distance_calculator";
-import { Starship } from "./starship";
+import { DistanceCalculator } from "./distance_calculator.js";
+import { Starship } from "./starship.js";
 
 export class NearbyEnemiesDetector {
     constructor(private distanceCalculator: DistanceCalculator) {}

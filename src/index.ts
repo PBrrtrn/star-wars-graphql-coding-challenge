@@ -1,6 +1,6 @@
 import { ApolloServer } from "@apollo/server";
 import { startStandaloneServer } from "@apollo/server/standalone";
-import { applicationSchema } from "./schema/application_schema";
+import { applicationSchema } from "./schema/application_schema.js";
 
 const PORT = 4567;
 

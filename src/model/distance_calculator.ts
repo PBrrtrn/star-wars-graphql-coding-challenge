@@ -1,4 +1,4 @@
-import { Location } from "./location"
+import { Location } from "./location.js"
 import haversine from 'haversine';
 
 export class DistanceCalculator {
