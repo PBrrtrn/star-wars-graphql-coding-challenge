@@ -2,11 +2,11 @@
 Repository for Finalis Coding Challenge (11/9/2023)
 
 ## Run instructions
-    Execute `sh start_container.sh` to start a terminal within a docker container holding the application and node modules.
+Execute `sh start_container.sh` to start a terminal within a docker container holding the application and node modules.
 
-    From within the container:
-        - Run tests with `npm test`
-        - Start the Apollo server with `npm start`
+From within the container:
+    - Run tests with `npm test`
+    - Start the Apollo server with `npm start`
 
 ## Working Functionalities
 - Model definitions
