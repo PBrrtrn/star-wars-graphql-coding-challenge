@@ -37,6 +37,10 @@ export const characterSchema = `#graphql
             characterId: ID!
             starshipId: ID!
         ): Character!
+        disembarkStarship(
+            characterId: ID!
+            starshipId: ID!
+        ): Character!
     }
 `
 
@@ -96,9 +100,20 @@ export const characterResolvers = {
             starshipRepository.update(args.starshipId, starship);
 
             return serializeCharacter(character);
+        },
+        disembarkStarship(_: any, args: any) {
+            const starshipRepository = StarshipRepository.getInstance();
+            const starship = starshipRepository.get(args.starshipId);
+            const character = characterRepository.get(args.characterId);
+
+            starship.removePassenger(character);
+            starshipRepository.update(args.starshipId, starship);
+
+            return serializeCharacter(character);
         }
     }
 }
+
 function serializeCharacter(character: Character): { id: string; name: string; species: string; forceSensitivity: number; currentLocation: { id: string; name: string; population: number; climate: string; terrain: string; latitude: number; longitude: number; }; } {
     return CharacterSerializer.serialize(character);
 }

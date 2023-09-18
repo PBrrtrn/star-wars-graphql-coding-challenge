@@ -29,8 +29,10 @@ describe("Character schema", () => {
     beforeEach(() => {
         const characterRepository = CharacterRepository.getInstance();
         const planetRepository = PlanetRepository.getInstance();
+        const starshipRepository = StarshipRepository.getInstance();
         characterRepository.clear();
         planetRepository.clear();
+        starshipRepository.clear();
 
         const tatooine = planetRepository.insert(Fixtures.tatooine());
 
@@ -186,5 +188,28 @@ describe("Character schema", () => {
         const expectedResult = { boardStarship: {id: "1", name: "Luke Skywalker"} };
         expectSuccess(expectedResult, response);
         expect(StarshipRepository.getInstance().get(0).getPassengers()).toStrictEqual([lukeSkywalker]);
-    })
+    }),
+
+    test("Disembark starship", async () => {
+        const millenniumFalcon = StarshipRepository.getInstance().insert(Fixtures.millenniumFalcon());
+        const lukeSkywalker = CharacterRepository.getInstance().insert(Fixtures.lukeSkywalker());
+        millenniumFalcon.addPassenger(lukeSkywalker);
+        StarshipRepository.getInstance().update(millenniumFalcon.id, millenniumFalcon);
+
+        const response = await testServer.executeOperation({
+            query: gql`mutation {
+                disembarkStarship(
+                    characterId: ${lukeSkywalker.id},
+                    starshipId: ${millenniumFalcon.id}
+                ) {
+                    id,
+                    name
+                }
+            }`
+        });
+
+        const expectedResult = { disembarkStarship: {id: "1", name: "Luke Skywalker"} };
+        expectSuccess(expectedResult, response);
+        expect(StarshipRepository.getInstance().get(0).getPassengers()).toStrictEqual([]);
+    });
 });
