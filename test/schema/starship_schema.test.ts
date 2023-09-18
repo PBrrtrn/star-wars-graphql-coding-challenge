@@ -208,4 +208,14 @@ describe("Starship schema", () => {
         };
         expectSuccess(expectedResult, response);
     });
+
+    test ("Delete starship", async () => {
+        const response = await testServer.executeOperation({
+            query: gql`mutation { deleteStarship(id: 0) { id, name } }`
+        });
+
+        const expectedResult = { deleteStarship: {id: "0", name: "Millennium Falcon"} };
+        expectSuccess(expectedResult, response);
+        expect(StarshipRepository.getInstance().get(0)).toBeUndefined();
+    });
 });

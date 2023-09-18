@@ -35,6 +35,9 @@ export const starshipSchema = `#graphql
             latitude: Float
             longitude: Float
         ): Starship!
+        deleteStarship(
+            id: ID!
+        ): Starship!
     }
 `
 
@@ -85,6 +88,10 @@ export const starshipResolvers = {
             starship.getPassengers().forEach(passenger => updatedStarship.addPassenger(passenger));
             StarshipRepository.getInstance().update(args.id, updatedStarship);
             return StarshipSerializer.serialize(updatedStarship);
+        },
+        deleteStarship(_: any, args: any) {
+            const deletedStarship = StarshipRepository.getInstance().delete(args.id);
+            return StarshipSerializer.serialize(deletedStarship);
         }
     }
 }
