@@ -1,6 +1,7 @@
 import { Character } from "../model/character.js";
 import { CharacterRepository } from "../repositories/character_repository.js";
 import { PlanetRepository } from "../repositories/planet_repository.js";
+import { StarshipRepository } from "../repositories/starship_repository.js";
 import { CharacterSerializer } from "../serializers/character_serializer.js";
 import { PlanetSerializer } from "../serializers/planet_serializer.js";
 
@@ -31,6 +32,10 @@ export const characterSchema = `#graphql
         ): Character!
         deleteCharacter(
             id: ID!
+        ): Character!
+        boardStarship(
+            characterId: ID!
+            starshipId: ID!
         ): Character!
     }
 `
@@ -79,6 +84,16 @@ export const characterResolvers = {
         deleteCharacter(_: any, args: any) {
             const deletedCharacter = CharacterRepository.getInstance().delete(args.id);
             return CharacterSerializer.serialize(deletedCharacter);
+        },
+        boardStarship(_: any, args: any) {
+            const starshipRepository = StarshipRepository.getInstance();
+            const starship = starshipRepository.get(args.starshipId);
+            const character = CharacterRepository.getInstance().get(args.characterId);
+            starship.addPassenger(character);
+            
+            starshipRepository.update(args.starshipId, starship);
+
+            return CharacterSerializer.serialize(character);
         }
     }
 }

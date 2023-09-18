@@ -10,6 +10,7 @@ import { planetSchema } from "../../src/schema/planet_schema";
 import { CharacterRepository } from "../../src/repositories/character_repository";
 import { CharacterSerializer } from "../../src/serializers/character_serializer";
 import { PlanetRepository } from "../../src/repositories/planet_repository";
+import { StarshipRepository } from "../../src/repositories/starship_repository"
 import { Planet } from "../../src/model/planet";
 import { Coordinates } from "../../src/model/coordinates";
 import { Character } from "../../src/model/character";
@@ -31,10 +32,7 @@ describe("Character schema", () => {
         characterRepository.clear();
         planetRepository.clear();
 
-        const tatooine = Fixtures.tatooine();
-        tatooine.id = 0;
-
-        planetRepository.insert(tatooine);
+        const tatooine = planetRepository.insert(Fixtures.tatooine());
 
         const hanSolo = Fixtures.hanSolo();
         hanSolo.currentLocation = tatooine;
@@ -170,4 +168,23 @@ describe("Character schema", () => {
         expectSuccess(expectedResult, response);
         expect(CharacterRepository.getInstance().get(0)).toBeUndefined();
     });
+
+    test("Board starship", async () => {
+        StarshipRepository.getInstance().insert(Fixtures.millenniumFalcon());
+        const lukeSkywalker = CharacterRepository.getInstance().insert(Fixtures.lukeSkywalker());
+        const response = await testServer.executeOperation({
+            query: gql`mutation {
+                boardStarship(
+                    characterId: ${lukeSkywalker.id},
+                    starshipId: 0
+                ) {
+                    id,
+                    name
+                }
+            }`
+        });
+        const expectedResult = { boardStarship: {id: "1", name: "Luke Skywalker"} };
+        expectSuccess(expectedResult, response);
+        expect(StarshipRepository.getInstance().get(0).getPassengers()).toStrictEqual([lukeSkywalker]);
+    })
 });
