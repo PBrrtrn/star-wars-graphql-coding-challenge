@@ -1,10 +1,9 @@
 import { starshipSchema, starshipResolvers } from "../../src/schema/starship_schema";
 
-import { ApolloServer, GraphQLResponse } from "@apollo/server";
+import { ApolloServer } from "@apollo/server";
 import { makeExecutableSchema } from "@graphql-tools/schema"
 import { merge } from 'lodash'
 import { gql } from "graphql-tag"
-import assert from "assert"
 
 import { characterSchema } from "../../src/schema/character_schema";
 import { planetSchema } from "../../src/schema/planet_schema";
@@ -15,6 +14,7 @@ import { StarshipRepository } from "../../src/repositories/starship_repository";
 import { StarshipSerializer } from "../../src/serializers/starship_serializer";
 import { Starship } from "../../src/model/starship";
 import { Coordinates } from "../../src/model/coordinates";
+import { expectSuccess } from "../helpers";
 
 describe("Starship schema", () => {
     const executableSchema = makeExecutableSchema({
@@ -209,9 +209,3 @@ describe("Starship schema", () => {
         expectSuccess(expectedResult, response);
     });
 });
-
-const expectSuccess = function(expectedResult: {}, response: GraphQLResponse) {
-    assert(response.body.kind === 'single');
-    expect(response.body.singleResult.errors).toBeUndefined();
-    expect(response.body.singleResult.data).toEqual(expectedResult);
-}

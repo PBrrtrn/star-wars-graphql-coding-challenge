@@ -1,10 +1,9 @@
 import { characterSchema, characterResolvers } from "../../src/schema/character_schema";
 
-import { ApolloServer, GraphQLResponse } from "@apollo/server";
+import { ApolloServer } from "@apollo/server";
 import { makeExecutableSchema } from "@graphql-tools/schema"
 import { merge } from 'lodash'
 import { gql } from "graphql-tag"
-import assert from "assert"
 
 import { Fixtures } from "../fixtures";
 import { planetSchema } from "../../src/schema/planet_schema";
@@ -14,6 +13,7 @@ import { PlanetRepository } from "../../src/repositories/planet_repository";
 import { Planet } from "../../src/model/planet";
 import { Coordinates } from "../../src/model/coordinates";
 import { Character } from "../../src/model/character";
+import { expectSuccess } from "../helpers";
 
 describe("Character schema", () => {
     const executableSchema = makeExecutableSchema({
@@ -161,9 +161,3 @@ describe("Character schema", () => {
         expectSuccess(expectedResult, response);
     });
 });
-
-const expectSuccess = function(expectedResult: {}, response: GraphQLResponse) {
-    assert(response.body.kind === 'single');
-    expect(response.body.singleResult.errors).toBeUndefined();
-    expect(response.body.singleResult.data).toEqual(expectedResult);
-}
