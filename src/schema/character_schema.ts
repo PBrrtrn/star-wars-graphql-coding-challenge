@@ -23,6 +23,12 @@ export const characterSchema = `#graphql
             forceSensitivity: Float!
             startingPlanetId: ID!
         ): Character!
+        updateCharacter(
+            id: ID!
+            name: String
+            species: String
+            forceSensitivity: Float
+        ): Character!
     }
 `
 
@@ -53,6 +59,19 @@ export const characterResolvers = {
             );
             const insertedCharacter = CharacterRepository.getInstance().insert(character);
             return CharacterSerializer.serialize(insertedCharacter);
+        },
+        updateCharacter(_: any, args: any) {
+            const character = CharacterRepository.getInstance().get(args.id);
+            const updatedCharacter = new Character(
+                args.name || character.name,
+                args.species || character.species,
+                args.forceSensitivity || character.forceSensitivity,
+                character.currentLocation,
+                args.id
+            );
+
+            CharacterRepository.getInstance().update(args.id, updatedCharacter);
+            return CharacterSerializer.serialize(updatedCharacter);
         }
     }
 }

@@ -135,6 +135,31 @@ describe("Character schema", () => {
         const expectedResult = {createCharacter: CharacterSerializer.serialize(expectedCharacter)};
         expectSuccess(expectedResult, response);
     });
+
+    test("Update character", async () => {
+        const response = await testServer.executeOperation({
+            query: gql`
+                mutation {
+                    updateCharacter(
+                        id: 0,
+                        name: "Han Solo Skywalker",
+                        forceSensitivity: 0.10
+                    ) {
+                        id,
+                        name,
+                        species,
+                        forceSensitivity
+                    }
+                }
+            `
+        });
+
+        const expectedResult = {
+            updateCharacter: {id: "0", name: "Han Solo Skywalker", species: "Human", forceSensitivity: 0.10}
+        };
+
+        expectSuccess(expectedResult, response);
+    });
 });
 
 const expectSuccess = function(expectedResult: {}, response: GraphQLResponse) {

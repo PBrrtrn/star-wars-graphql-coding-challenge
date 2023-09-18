@@ -1,3 +1,4 @@
+import { Character } from "../../src/model/character";
 import { CharacterRepository } from "../../src/repositories/character_repository";
 import { Fixtures } from "../fixtures";
 
@@ -43,6 +44,15 @@ describe("Character repository", () => {
         lukeSkywalker.id = 1;
 
         expect(characterRepository.get(1)).toStrictEqual(lukeSkywalker);
+    });
+
+    test("Can update a character by ID", () => {
+        populateRepository(characterRepository);
+        const updatedCharacter = new Character("Han Solo Skywalker", "Human", 0.1, Fixtures.tatooine(), 0);
+        characterRepository.update(0, updatedCharacter);
+
+        const fetchedCharacter = characterRepository.get(0);
+        expect(fetchedCharacter).toStrictEqual(updatedCharacter);
     });
 });
 

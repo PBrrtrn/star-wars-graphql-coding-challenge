@@ -21,6 +21,12 @@ export abstract class Repository<T extends Identifiable> {
         return entity;
     }
 
+    public update(id: number, updatedEntity: T): T {
+        updatedEntity.id = id;
+        this.data[id] = updatedEntity;
+        return updatedEntity;
+    }
+
     public clear() {
         // TODO: Raise exception if ENV is not test
         this.data = {};
