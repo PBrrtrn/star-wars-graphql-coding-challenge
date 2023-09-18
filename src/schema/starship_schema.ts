@@ -26,6 +26,14 @@ export const starshipSchema = `#graphql
             latitude: Float!
             longitude: Float!
         ): Starship!
+        updateStarship(
+            id: ID!
+            name: String
+            model: String
+            cargoCapacity: Float
+            latitude: Float
+            longitude: Float
+        ): Starship!
     }
 `
 
@@ -56,6 +64,23 @@ export const starshipResolvers = {
 
             const insertedStarship = StarshipRepository.getInstance().insert(starship);
             return StarshipSerializer.serialize(insertedStarship);
+        },
+        updateStarship(_: any, args: any) {
+            const starship = StarshipRepository.getInstance().get(args.id);
+            const starshipCoordinates = starship.getCoordinates();
+            const updatedStarship = new Starship(
+                args.name || starship.name,
+                args.model || starship.model,
+                args.cargoCapacity || starship.cargoCapacity,
+                new Coordinates(
+                    args.latitude || starshipCoordinates.latitude,
+                    args.longitude || starshipCoordinates.longitude
+                ),
+                args.id
+            );
+            starship.getPassengers().forEach(passenger => updatedStarship.addPassenger(passenger));
+            StarshipRepository.getInstance().update(args.id, updatedStarship);
+            return StarshipSerializer.serialize(updatedStarship);
         }
     }
 }

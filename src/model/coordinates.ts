@@ -8,4 +8,8 @@ export class Coordinates {
         public latitude: number,
         public longitude: number
     ) {}
+
+    public equals(other: Coordinates): boolean {
+        return this.latitude == other.latitude && this.longitude == other.longitude;
+    }
 }

@@ -24,7 +24,7 @@ export class Starship extends Location {
     }
 
     addPassenger(character: Character): void {
-        if (character.currentLocation.getCoordinates() != this.getCoordinates()) {
+        if (!(this.getCoordinates().equals(character.currentLocation.getCoordinates()))) {
             throw new Error("Passenger is at different location");
         }
 

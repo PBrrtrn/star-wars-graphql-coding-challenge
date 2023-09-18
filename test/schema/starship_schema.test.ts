@@ -132,6 +132,47 @@ describe("Starship schema", () => {
         const expectedResult = {createStarship: StarshipSerializer.serialize(expectedStarship)};
         expectSuccess(expectedResult, response);
     });
+
+    test("Update starship", async () => {
+        const response = await testServer.executeOperation({
+            query: gql`
+                mutation {
+                    updateStarship(
+                        id: 0,
+                        name: "The Millennium Falcon",
+                        cargoCapacity: 100
+                    ) {
+                        id,
+                        name,
+                        model,
+                        cargoCapacity,
+                        latitude,
+                        longitude,
+                        passengers {
+                            name
+                        }
+                    }
+                }
+            `
+        });
+
+        const expectedResult = {
+            updateStarship: {
+                id: "0",
+                name: "The Millennium Falcon",
+                model: "YT-1300",
+                cargoCapacity: 100,
+                latitude: 30.0,
+                longitude: 30.0,
+                passengers: [
+                    {
+                        name: "Han Solo"
+                    }
+                ]
+            }
+        };
+        expectSuccess(expectedResult, response);
+    });
 });
 
 const expectSuccess = function(expectedResult: {}, response: GraphQLResponse) {
