@@ -11,10 +11,10 @@ From within the container:
 ## Working Functionalities
 - Model definitions
 - CRUD endpoints
+- Character boarding and disbembarking
 
 ## Pending Functionalities
 - Character relocation
-- Character boarding and disboarding
 - Starship travelling
 - Planet-to-starship distance calculation
 - Nearby enemies for a given starship
